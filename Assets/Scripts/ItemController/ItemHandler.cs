@@ -16,7 +16,9 @@ public class ItemHandler : MonoBehaviour
     [SerializeField]
     private TMP_Text itemDescription;
 
-    private float rotationSpeed = 500f;
+    public string objectTag="UI_MouseDetect";
+
+    private float rotationSpeed = 1000f;
 
     void Start()
     {
@@ -26,16 +28,13 @@ public class ItemHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && Utils.IsPointerOverUI(objectTag))
         {
             Vector3 direction = new Vector3(Input.GetAxisRaw("Mouse Y"), -Input.GetAxisRaw("Mouse X"), 0);
             Vector3 velocity = direction * rotationSpeed * Time.deltaTime;
-            Vector3 newRotation = mainModel.rotation.eulerAngles + velocity;
-            Debug.Log(velocity);
-            mainModel.rotation = Quaternion.Euler(newRotation);
-
+            mainModel.Rotate(velocity);
+           
         }
-
-
     }
+
 }

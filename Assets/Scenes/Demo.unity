@@ -924,6 +924,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5533250044304458482, guid: 0abfa68c6ccc25f4089b956906d76ce2,
+        type: 3}
+      propertyPath: m_TagString
+      value: UI_MouseDetect
+      objectReference: {fileID: 0}
     - target: {fileID: 5533250044304458483, guid: 0abfa68c6ccc25f4089b956906d76ce2,
         type: 3}
       propertyPath: m_AnchorMax.y
