@@ -8,7 +8,7 @@ public class ItemHandler : MonoBehaviour
     // Start is called before the first frame update
 
     [SerializeField]
-    private Transform mainModel;
+    private Transform modelParentHolder;
 
     [SerializeField]
     private TMP_Text itemTitle;
@@ -16,12 +16,18 @@ public class ItemHandler : MonoBehaviour
     [SerializeField]
     private TMP_Text itemDescription;
 
+    [SerializeField]
+    private Transform instantiatePoint;
+
+    [SerializeField]
+    private LayerMask layerRenderModel;
+
     public string objectTag = "UI_MouseDetect";
 
-    private float rotationSpeed = 1000f;
+    private float rotationSpeed = 500f;
 
-    private float zoomSpeed = 1f;
-
+    private float zoomSpeed = 20;
+    private Transform mainModel;
     void Start()
     {
 
@@ -30,7 +36,7 @@ public class ItemHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Utils.IsPointerOverUI(objectTag))
+        if (Utils.IsPointerOverUI(objectTag) && mainModel != null)
         {
             if (Input.GetMouseButton(0))
             {
@@ -39,12 +45,30 @@ public class ItemHandler : MonoBehaviour
                 mainModel.Rotate(velocity);
 
             }
-          //  Debug.Log("Input.mouseScrollDelta" + Input.mouseScrollDelta);
             float mouseWheelDirection = Input.mouseScrollDelta.y * zoomSpeed;
             Vector3 target = mainModel.localScale + new Vector3(mouseWheelDirection, mouseWheelDirection, mouseWheelDirection);
             mainModel.localScale = Vector3.Lerp(mainModel.localScale,target,0.05f);
         }
 
     }
-
+    public void init(string title,string des,EElectricItem type) {
+        if(itemTitle!=null) {
+            itemTitle.SetText(title);
+        }
+        if(itemDescription!=null) {
+            itemDescription.SetText(des);
+        }
+        GameObject model= ResourceManager.instance.GetElectricItemByType(type);
+        if(model!=null) {
+           mainModel = Instantiate(model,instantiatePoint.position,instantiatePoint.rotation).transform;
+           mainModel.transform.SetParent(modelParentHolder);
+           mainModel.transform.localScale = instantiatePoint.localScale;
+           mainModel.gameObject.layer = Mathf.RoundToInt(Mathf.Log(layerRenderModel.value, 2));
+        }
+    }
+    public void Hide() {
+        gameObject.SetActive(false);
+        Destroy(mainModel?.gameObject);
+        mainModel = null;
+    }
 }

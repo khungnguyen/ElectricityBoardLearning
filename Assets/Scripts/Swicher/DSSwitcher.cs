@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DSSwitcher : SwitcherBase, ISwitcherEvent
 {
+    ISwitcherEvent onSwitch;
+
+ 
     public void OnSwitcherClicked()
     {
        base.OnSwitcherClicked();
-        Debug.LogError("[DSSwitcher]" + " OnSwitcherClicked");
         ChangeStatus(status);
     }
     void ChangeStatus(ESwitcherStatus status) {
