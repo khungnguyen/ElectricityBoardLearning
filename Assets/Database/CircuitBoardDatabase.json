@@ -1,0 +1,48 @@
+{
+    "CircuitBoards": [
+        {
+          "name": "Circuit Board 1",
+          "model": "CircuitBoard_1",
+          "id": "CircuitBoard1",
+          "practice": [
+            {
+              "name": "Case 1",
+              "id": 1,
+              "Steps": [
+                {
+                  "type": "FCO",
+                  "value": "ON"
+                },
+                {
+                  "type": "DS1",
+                  "value": "ON"
+                },
+                {
+                  "type": "DS2",
+                  "value": "ON"
+                }
+              ]
+            },
+            {
+              "name": "Case 1",
+              "instruction": "",
+              "id": 2,
+              "Steps": [
+                {
+                  "type": "FCO",
+                  "value": "OFF"
+                },
+                {
+                  "type": "DS1",
+                  "value": "ON"
+                },
+                {
+                  "type": "DS2",
+                  "value": "OFF"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+  }

@@ -1,0 +1,16 @@
+{
+    "ElectricItems": [
+      {
+        "type": "FCO",
+        "title": "FCO title",
+        "description": "This is title descripton of Object",
+        "model": "FCOModel"
+      },
+      {
+        "type": "DS",
+        "title": "DS title",
+        "description": "This is title descripton of Object",
+        "model": "DSModel"
+      }
+    ]
+  }

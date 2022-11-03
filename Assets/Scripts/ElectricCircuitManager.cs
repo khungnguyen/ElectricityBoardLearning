@@ -35,7 +35,9 @@ public class ElectricCircuitManager : MonoBehaviour
         }
     }
     public void ShowItemPreview(EElectricItem type) {
-        itemHandler.init(type.ToString(),"This is the discription which I duno",type);
-        itemHandler.gameObject.SetActive(true);
+        itemHandler
+        .init(type.ToString(),"This is the discription which I duno",type)
+        .Show();
+
     }
 }

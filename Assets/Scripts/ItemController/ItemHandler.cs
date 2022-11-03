@@ -47,28 +47,45 @@ public class ItemHandler : MonoBehaviour
             }
             float mouseWheelDirection = Input.mouseScrollDelta.y * zoomSpeed;
             Vector3 target = mainModel.localScale + new Vector3(mouseWheelDirection, mouseWheelDirection, mouseWheelDirection);
-            mainModel.localScale = Vector3.Lerp(mainModel.localScale,target,0.05f);
+            mainModel.localScale = Vector3.Lerp(mainModel.localScale, target, 0.05f);
         }
 
     }
-    public void init(string title,string des,EElectricItem type) {
-        if(itemTitle!=null) {
+    public ItemHandler init(string title, string des, EElectricItem type)
+    {
+        if (itemTitle != null)
+        {
             itemTitle.SetText(title);
         }
-        if(itemDescription!=null) {
+        if (itemDescription != null)
+        {
             itemDescription.SetText(des);
         }
-        GameObject model= ResourceManager.instance.GetElectricItemByType(type);
-        if(model!=null) {
-           mainModel = Instantiate(model,instantiatePoint.position,instantiatePoint.rotation).transform;
-           mainModel.transform.SetParent(modelParentHolder);
-           mainModel.transform.localScale = instantiatePoint.localScale;
-           mainModel.gameObject.layer = Mathf.RoundToInt(Mathf.Log(layerRenderModel.value, 2));
+        GameObject model = ResourceManager.instance.GetElectricItemByType(type);
+        if (model != null)
+        {
+            mainModel = Instantiate(model, instantiatePoint.position, instantiatePoint.rotation).transform;
+            mainModel.transform.SetParent(modelParentHolder);
+            mainModel.transform.localScale = instantiatePoint.localScale;
+            mainModel.gameObject.layer = Mathf.RoundToInt(Mathf.Log(layerRenderModel.value, 2));
         }
+        return this;
     }
-    public void Hide() {
-        gameObject.SetActive(false);
-        Destroy(mainModel?.gameObject);
-        mainModel = null;
+    public void Show()
+    {
+        gameObject.SetActive(true);
+        GetComponent<BoundInAndOut>()?.PlayBoundEffect();
+    }
+    public void Hide()
+    {
+        GetComponent<BoundInAndOut>()?.PlayBoundOutEffect(() =>
+        {
+            Utils.Log(GetType().Name,"Complete Animation");
+            gameObject.SetActive(false);
+            Destroy(mainModel?.gameObject);
+            mainModel = null;
+        });
+
     }
 }
+
