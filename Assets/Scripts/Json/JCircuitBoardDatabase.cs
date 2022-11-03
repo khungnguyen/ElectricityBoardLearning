@@ -9,7 +9,7 @@ public class JCircuitBoardItem {
     public string name;
     public string model;
     public string id;
-    public JCircuitBoardPractice[] practice;
+    public JCircuitBoardPractice[] practices;
 }
 [System.Serializable]
 public class JCircuitBoardPractice {

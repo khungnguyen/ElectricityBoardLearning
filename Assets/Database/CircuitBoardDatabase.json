@@ -4,7 +4,7 @@
           "name": "Circuit Board 1",
           "model": "CircuitBoard_1",
           "id": "CircuitBoard1",
-          "practice": [
+          "practices": [
             {
               "name": "Case 1",
               "id": 1,

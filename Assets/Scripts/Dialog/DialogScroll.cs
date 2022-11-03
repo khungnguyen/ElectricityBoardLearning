@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,39 +10,39 @@ public class DialogScroll : Dialog, IDialog, IButtonEvent
 
     [SerializeField]
     private GameObject baseButton;
-    public override void Hide()
+    public override void Hide(Action complete = null)
     {
-        base.Hide();
+        base.Hide(complete);
     }
-    public override void Show()
+    public override void Show(Action complete = null)
     {
         if (!gameObject.activeInHierarchy)
         {
             gameObject.SetActive(true);
         }
-        base.Show();
+        base.Show(complete);
     }
-    public override void Init(params object[] arg)
+    public override Dialog Init(string title, Action<object> ok, Action<object> cancel)
     {
-        foreach (var i in arg)
-        {
-            JCircuitBoardItem board = (JCircuitBoardItem)i;
-            var button = Instantiate(baseButton);
-            button.transform.SetParent(scrollContent);
-            var buttonComp = button.GetComponent<ButtonBase>();
-            if (buttonComp != null)
-            {
-                buttonComp.SetText(board.name);
-                buttonComp.SetData(board);
-                buttonComp.OnClicked += OnClicked;
-            }
-        }
-
+        return base.Init(title, ok, cancel);
     }
-
+    public ButtonBase AddButton(GameObject button)
+    {
+        var buttonbase = Instantiate(button, scrollContent).GetComponent<ButtonBase>();
+        buttonbase.OnClicked += OnClicked;
+        return buttonbase;
+    }
+    public ButtonBase AddButton()
+    {
+        return AddButton(baseButton);
+    }
     public void OnClicked(object action)
     {
-
+        var convert = (JCircuitBoardItem)action;
+        Utils.Log("convert", convert.name);
+        if (okFunc != null)
+        {
+            okFunc(convert);
+        }
     }
-
 }
