@@ -5,6 +5,14 @@ public enum ESwitcherStatus {
 public enum EElectricItem {
     FCO,
     DS,
-    Cube,
-    Sphere
+}
+public enum EDialogType {
+    DialogScroll,
+    DialogConfirm,
+    DialogNotice,
+}
+public enum LogLevel {
+    Debug,
+    Warn,
+    Error
 }

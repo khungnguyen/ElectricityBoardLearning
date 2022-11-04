@@ -1968,7 +1968,7 @@ GameObject:
   - component: {fileID: 5533250043834999280}
   - component: {fileID: 5533250043834999182}
   m_Layer: 5
-  m_Name: Holder
+  m_Name: 3DViewer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

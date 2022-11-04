@@ -20,7 +20,7 @@ public class Utils
         }
         return false;
     }
-    public static void Log(string tag, params object[] agr)
+    public static void Logging(string tag, LogLevel level, params object[] agr)
     {
 
         string message = "";
@@ -29,6 +29,41 @@ public class Utils
             message += agr[i].ToString();
             message += " ";
         }
-        Debug.Log("[" + tag.GetType() + "]" + message);
-     }
+        if (level == LogLevel.Debug)
+        {
+            Debug.Log("#[" + tag+ "] " + message);
+        }
+        else if (level == LogLevel.Error)
+        {
+            Debug.LogError("#[" + tag + "] " + message);
+        }
+
+    }
+    public static void Log(object tag, params object[] agr)
+    {
+        if (tag is string)
+        {
+
+            Logging((string)tag, LogLevel.Debug, agr);
+
+        }
+        else
+        {
+            Logging(tag != null ? tag.GetType().Name : "No Name", LogLevel.Debug, agr);
+        }
+
+    }
+    public static void LogError(object tag, params object[] agr)
+    {
+        if (tag is string)
+        {
+            Logging((string)tag, LogLevel.Error, agr);
+
+        }
+        else
+        {
+            Logging(tag != null ? tag.GetType().Name : "No Name", LogLevel.Error, agr);
+        }
+
+    }
 }

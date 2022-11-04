@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Dialog : MonoBehaviour
+public class Dialog : MonoBehaviour, IDialog
 {
     [SerializeField]
     private BoundInAndOut boundAnimation;
@@ -14,17 +14,29 @@ public class Dialog : MonoBehaviour
 
     protected Action<object> okFunc;
     protected Action<object> cancelFunc;
-    public virtual void Hide(Action onComplete = null)
+    public virtual void Hide(Action onComplete = null, bool needDestroy = true)
     {
-        boundAnimation.PlayBoundOutEffect(()=>{
-            if(onComplete!=null) {
+        boundAnimation.PlayBoundOutEffect(() =>
+        {
+            if (onComplete != null)
+            {
                 onComplete();
             }
+            Utils.Log(this, "Hide", "Destroying object", needDestroy, gameObject.transform.name);
+            if (needDestroy)
+            {
+
+
+                Destroy(gameObject);
+            }
+
         });
     }
 
-    public virtual Dialog Init(string title,Action<object> ok,Action<object> cancel) {
-        if(tmpTitle!= null) {
+    public virtual Dialog Init(string title, Action<object> ok, Action<object> cancel)
+    {
+        if (tmpTitle != null)
+        {
             tmpTitle.SetText(title);
         }
         okFunc = ok;
@@ -34,9 +46,26 @@ public class Dialog : MonoBehaviour
 
     public virtual void Show(Action onComplete = null)
     {
-        boundAnimation.PlayBoundEffect(()=>{
-             if(onComplete!=null) {
+        if (!gameObject.activeInHierarchy)
+        {
+            gameObject.SetActive(true);
+        }
+        boundAnimation.PlayBoundEffect(() =>
+        {
+            if (onComplete != null)
+            {
                 onComplete();
+            }
+        });
+    }
+    public virtual void Cancel()
+    {
+
+        Hide(() =>
+        {
+            if (cancelFunc != null)
+            {
+                cancelFunc(this);
             }
         });
     }

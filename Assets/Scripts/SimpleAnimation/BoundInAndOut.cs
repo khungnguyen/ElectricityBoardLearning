@@ -30,7 +30,6 @@ public class BoundInAndOut : MonoBehaviour
     */
     IEnumerator BoundInnOut(Action OnCompleted)
     {
-        Utils.Log(GetType().Name, "BoundInnOut");
         yield return StartCoroutine(Bound(startBound, maxBoundSize, 0.2f));
         yield return StartCoroutine(Bound(maxBoundSize, minBoundSize, 0.1f));
         yield return StartCoroutine(Bound(minBoundSize, originalBound, 0.1f));
@@ -41,7 +40,7 @@ public class BoundInAndOut : MonoBehaviour
     }
 
     /**
-    *Bound function to scale a transfrom from start value to target value by time
+    * Bound function to scale a transfrom from start value to target value by time
     * @param start : begin scale value, would be converted to Vector3
     * @param target : end scale value, would be converted to Vector3
     * @param maxTime : How long scale effect take.

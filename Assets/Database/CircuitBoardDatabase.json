@@ -6,7 +6,8 @@
           "id": "CircuitBoard1",
           "practices": [
             {
-              "name": "Case 1",
+              "name": "User Case 1",
+              "instruction": "Turn OFF the power",
               "id": 1,
               "Steps": [
                 {
@@ -25,7 +26,7 @@
             },
             {
               "name": "Case 1",
-              "instruction": "",
+              "instruction": "Turn ON the power",
               "id": 2,
               "Steps": [
                 {

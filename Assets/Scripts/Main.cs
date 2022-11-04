@@ -4,54 +4,87 @@ using UnityEngine;
 
 public class Main : MonoBehaviour
 {
-    public GameObject scrollDialogPrefab;
+
 
     public Transform dialogParent;
+    public Transform circuitBoardParent;
 
-    private DialogScroll cbSelectionialog, cbPracticesDialog;
+    public PracticeSession practiceSession;
+
+    private DialogScroll cbSelectionDialog, cbPracticesDialog;
     void Start()
     {
         ShowCBSelectionDialog();
     }
     void ShowCBSelectionDialog()
     {
-        cbSelectionialog = Instantiate(scrollDialogPrefab, dialogParent).GetComponent<DialogScroll>();
-        cbSelectionialog.Init("Select your Circuit Board",
+        var dialogPrefab = ResourceManager.instance.GetDialogByType(EDialogType.DialogScroll);
+        cbSelectionDialog = Instantiate(dialogPrefab, dialogParent).GetComponent<DialogScroll>();
+        cbSelectionDialog.Init("Select your Circuit Board",
         (object data) =>
         {
             JCircuitBoardItem item = (JCircuitBoardItem)data;
-            Utils.Log(GetType().Name, "showCBSelectionDialog", item.practices.Length);
-            cbSelectionialog.Hide(() =>
+            cbSelectionDialog.Hide(() =>
             {
-                ShowPracticeCases(item.practices);
-                Destroy(cbSelectionialog.gameObject);
+
+                ShowPracticeCases(item);
             });
         },
         null);
-        foreach (var item in ResourceManager.instance.circuitDatabase.CircuitBoards)
+        foreach (JCircuitBoardItem item in ResourceManager.instance.circuitDatabase.CircuitBoards)
         {
-            ButtonBase button = cbSelectionialog.AddButton();
+            ButtonBase button = cbSelectionDialog.AddButton();
             button.SetText(item.name);
             button.SetData(item);
         };
-        cbSelectionialog.Show();
+        cbSelectionDialog.Show();
     }
-    void ShowPracticeCases(JCircuitBoardPractice[] practices)
+    void ShowPracticeCases(JCircuitBoardItem board)
     {
-        cbPracticesDialog = Instantiate(scrollDialogPrefab, dialogParent).GetComponent<DialogScroll>();
+        JCircuitBoardPractice[] practices = board.practices;
+        var dialogPrefab = ResourceManager.instance.GetDialogByType(EDialogType.DialogScroll);
+        cbPracticesDialog = Instantiate(dialogPrefab, dialogParent).GetComponent<DialogScroll>();
         cbPracticesDialog.Init("Select your practice",
         (object data) =>
         {
-            JCircuitBoardPractice convert = (JCircuitBoardPractice)data;
-            Utils.Log(GetType().Name, "showPracticeCases", convert.name);
+            JPracticeHolder convert = (JPracticeHolder)data;
+            cbPracticesDialog.Hide(() =>
+            {
+                InstantiatePracticeSession(convert);
+            });
+
         },
-        null);
+        (object data) =>
+        {
+            ShowCBSelectionDialog(); // back to circuit selection dialog
+        });
         foreach (JCircuitBoardPractice item in practices)
         {
             ButtonBase button = cbPracticesDialog.AddButton();
             button.SetText(item.name);
-            button.SetData(item);
+            button.SetData(new JPracticeHolder(board, item.id));
         };
         cbPracticesDialog.Show();
+    }
+    void InstantiatePracticeSession(JPracticeHolder holder)
+    {
+        practiceSession.initSession(holder);
+        practiceSession.onPracticeEnd += onPracticeEnd;
+    }
+    private void onPracticeEnd(bool success)
+    {
+        var dialogPrefab = ResourceManager.instance.GetDialogByType(EDialogType.DialogNotice);
+        var dialogComp = Instantiate(dialogPrefab, dialogParent).GetComponent<DialogNotice>();
+        dialogComp.Init("Notice", (object data) =>
+        {
+
+        },
+        (object data) =>
+        {
+
+        }
+        );
+        dialogComp.AddContent(success?"Congratulation! You has passed this practice":"Damn! You has killed the system");
+        dialogComp.Show();
     }
 }
