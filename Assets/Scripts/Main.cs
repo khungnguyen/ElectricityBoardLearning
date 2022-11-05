@@ -7,13 +7,20 @@ public class Main : MonoBehaviour
 
 
     public Transform dialogParent;
+
     public Transform circuitBoardParent;
 
-    public PracticeSession practiceSession;
+
+    public ItemHandler itemHandler;
+
+    public GameObject buttonLayout;
+
+    private PracticeSession practiceSession;
 
     private DialogScroll cbSelectionDialog, cbPracticesDialog;
     void Start()
     {
+        buttonLayout.SetActive(false);
         ShowCBSelectionDialog();
     }
     void ShowCBSelectionDialog()
@@ -68,13 +75,20 @@ public class Main : MonoBehaviour
     }
     void InstantiatePracticeSession(JPracticeHolder holder)
     {
-        practiceSession.InitSession(holder);
+        var gameObject = Instantiate(ResourceManager.instance.GetCircuitBoardByModelName(holder.GetBoard().model), circuitBoardParent);
+        practiceSession = gameObject.AddComponent<PracticeSession>();
+        practiceSession.InitSession(holder, itemHandler);
         practiceSession.OnPracticeEnd += OnPracticeEnd;
+        buttonLayout.SetActive(true);
     }
     void EndPracticeSession()
     {
-        practiceSession.Reset();
+        practiceSession.EndPractice();
         practiceSession.OnPracticeEnd -= OnPracticeEnd;
+    }
+    void ResetPracticeSession()
+    {
+        practiceSession.Reset();
     }
     private void OnPracticeEnd(bool success)
     {
@@ -96,5 +110,10 @@ public class Main : MonoBehaviour
     {
         EndPracticeSession();
         ShowCBSelectionDialog();
+        buttonLayout.SetActive(false);
+    }
+    public void OnResetPracticeButtonClick()
+    {
+        ResetPracticeSession();
     }
 }

@@ -5,21 +5,29 @@ using UnityEngine.EventSystems;
 
 public class DSSwitcher : SwitcherBase, ISwitcherEvent
 {
-    ISwitcherEvent onSwitch;
-
- 
-    public void OnSwitcherClicked()
+    void Start()
     {
-       base.OnSwitcherClicked();
+        if(status ==  ESwitcherStatus.ON) {
+           ChangeStatus(status); 
+        }
+    }
+
+    public override void OnSwitcherClicked()
+    {
+        base.OnSwitcherClicked();
         ChangeStatus(status);
     }
-    void ChangeStatus(ESwitcherStatus status) {
-        switch(status) {
+    public override void ChangeStatus(ESwitcherStatus status)
+    {
+        Utils.Log(this, gameObject.name, status);
+        switch (status)
+        {
             case ESwitcherStatus.ON:
             case ESwitcherStatus.OFF:
-            animator.SetTrigger(status.ToString());
-            break;
+                animator.SetTrigger(status.ToString());
+                break;
         }
-        //Quy
+        base.ChangeStatus(status);
     }
+
 }

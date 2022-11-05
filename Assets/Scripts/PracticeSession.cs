@@ -6,25 +6,24 @@ using System.Collections.Generic;
 
 public class PracticeSession : MonoBehaviour
 {
-    private JCircuitBoardItem board;
-    private JCircuitBoardPractice practice;
-
-    [SerializeField]
-    private Transform circuitBoardParent;
-    [SerializeField]
-    private ItemHandler itemHandler;
+    
 
     public static PracticeSession instance;
 
-    public Transform electricCircuitParent;
 
     public Action<bool> OnPracticeEnd;
 
     private Transform curCircuitBoard;
+
+
+    private JCircuitBoardItem board;
+    private JCircuitBoardPractice practice;
+    private ItemHandler itemHandler;
     private List<ElectricItemBase> GetAllElectricItem()
     {
-        return new List<ElectricItemBase>(electricCircuitParent.GetComponentsInChildren<ElectricItemBase>());
+        return new List<ElectricItemBase>(curCircuitBoard.GetComponentsInChildren<ElectricItemBase>());
     }
+
     private void ShowItemPreview(EElectricItem type)
     {
         itemHandler
@@ -32,12 +31,13 @@ public class PracticeSession : MonoBehaviour
         .Show();
 
     }
-    public void InitSession(JPracticeHolder holder)
+    public void InitSession(JPracticeHolder holder, ItemHandler handler)
     {
+        itemHandler = handler;
+        curCircuitBoard = transform;
         board = holder.GetBoard();
         practice = board.GetPracticeById(holder.GetPracticeId());
         string modelName = board.model;
-        curCircuitBoard = Instantiate(ResourceManager.instance.GetCircuitBoardByModelName(modelName), circuitBoardParent).transform;
         foreach (var item in practice.Steps)
         {
             resultSteps.Add(item.type, item.value);
@@ -99,27 +99,33 @@ public class PracticeSession : MonoBehaviour
             userSteps[ins.GetName()] = s.ToString();
         }
         bool success = userSteps.Count == resultSteps.Count;
-        for (int i = 0; i < userSteps.Count; i++)
+        if (userSteps.Count <= resultSteps.Count)
         {
-            var result = resultSteps.ElementAt(i);
-            var userResult = userSteps.ElementAt(i);
-            if (result.Key == userResult.Key && result.Value == userResult.Value)
+            for (int i = 0; i < userSteps.Count; i++)
             {
+                var result = resultSteps.ElementAt(i);
+                var userResult = userSteps.ElementAt(i);
+                if (result.Key == userResult.Key && result.Value == userResult.Value)
+                {
 
+                }
+                else
+                {
+
+                    success = false;
+                    OnCompleted(false);
+                    break;
+                }
             }
-            else
+            if (success)
             {
-
-                success = false;
-                OnCompleted(false);
-                break;
+                OnCompleted(true);
             }
         }
-        if (success)
+        else
         {
-            OnCompleted(true);
+            OnCompleted(false);
         }
-
 
     }
     public void OnCompleted(bool success)
@@ -132,14 +138,14 @@ public class PracticeSession : MonoBehaviour
         {
             Utils.LogError(this, "Wrong step, you're dead");
         }
-        ShowPracticeCorrectSteps();
+        ShowPracticeCorrectSteps(true);
         if (OnPracticeEnd != null)
         {
             OnPracticeEnd(success);
         }
     }
 
-    private void ShowPracticeCorrectSteps()
+    private void ShowPracticeCorrectSteps(bool show)
     {
         var listElectricItem = GetAllElectricItem();
         listElectricItem.ForEach(e =>
@@ -149,7 +155,7 @@ public class PracticeSession : MonoBehaviour
                 SwitcherBase switcher = (SwitcherBase)e;
                 if (switcher.HasUsed())
                 {
-                    switcher.ShowItemStep();
+                    switcher.ShowStepInstruciton(show);
                 }
 
             }
@@ -169,9 +175,28 @@ public class PracticeSession : MonoBehaviour
     }
     private Dictionary<string, string> resultSteps = new Dictionary<string, string>();
     private Dictionary<string, string> userSteps = new Dictionary<string, string>();
-    public void Reset() {
-        Destroy(curCircuitBoard.gameObject);
-        resultSteps.Clear();
+    public void Reset()
+    {
         userSteps.Clear();
+        ShowPracticeCorrectSteps(false);
+        GetAllElectricItem().ForEach(electric =>
+        {
+            if (electric != null)
+            {
+                var switcher = (SwitcherBase)electric;
+                if (switcher != null)
+                {
+                    switcher.Reset();
+
+                }
+            }
+        });
+
+
+
+    }
+    public void EndPractice()
+    {
+        Destroy(gameObject);
     }
 }

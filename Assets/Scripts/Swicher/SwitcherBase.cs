@@ -14,8 +14,9 @@ public class SwitcherBase : ElectricItemBase, IPointerDownHandler
     public TMP_Text tmpStep;
 
     public GameObject stepParent;
-    protected ESwitcherStatus status = ESwitcherStatus.OFF;
+    public ESwitcherStatus status = ESwitcherStatus.OFF;
 
+    private ESwitcherStatus defaultStatus;
     private int step = -1;
     void Awake()
     {
@@ -23,9 +24,9 @@ public class SwitcherBase : ElectricItemBase, IPointerDownHandler
         {
             stepParent.SetActive(false);
         }
-
+        defaultStatus = status;
     }
-    public void OnSwitcherClicked()
+    public virtual void OnSwitcherClicked()
     {
         if (status == ESwitcherStatus.OFF)
         {
@@ -56,9 +57,41 @@ public class SwitcherBase : ElectricItemBase, IPointerDownHandler
     {
         return step != -1;
     }
-    public void ShowItemStep()
+    public void ShowStepInstruciton(bool show)
     {
-        stepParent.SetActive(true);
+        stepParent.SetActive(show);
     }
-
+    public virtual void ChangeStatus(ESwitcherStatus status)
+    {
+        this.status = status;
+    }
+    public ESwitcherStatus GetStatus()
+    {
+        return status;
+    }
+    public ESwitcherStatus GetDefaultStatus()
+    {
+        return defaultStatus;
+    }
+    void OnValidate()
+    {
+        var off = transform.Find("Off");
+        var on = transform.Find("On");
+        off.gameObject.SetActive(status == ESwitcherStatus.OFF);
+        on.gameObject.SetActive(status == ESwitcherStatus.ON);
+    }
+    public void Reset()
+    {
+        ChangeStatus(defaultStatus);  
+    }
+    protected void ResetTrigger()
+    {
+        foreach (var trigger in animator.parameters)
+        {
+            if (trigger.type == AnimatorControllerParameterType.Trigger)
+            {
+                animator.ResetTrigger(trigger.name);
+            }
+        }
+    }
 }
