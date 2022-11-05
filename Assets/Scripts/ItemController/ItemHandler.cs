@@ -24,9 +24,9 @@ public class ItemHandler : MonoBehaviour
 
     public string objectTag = "UI_MouseDetect";
 
-    private float rotationSpeed = 500f;
+    public float rotationSpeed = 500f;
 
-    private float zoomSpeed = 40;
+    public float zoomSpeed = 40;
     private Transform mainModel;
     void Start()
     {
@@ -51,7 +51,7 @@ public class ItemHandler : MonoBehaviour
         }
 
     }
-    public ItemHandler init(string title, string des, EElectricItem type)
+    public ItemHandler Init(string title, string des, EElectricItem type)
     {
         if (itemTitle != null)
         {

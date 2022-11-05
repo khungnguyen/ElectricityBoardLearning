@@ -68,10 +68,10 @@ public class Main : MonoBehaviour
     }
     void InstantiatePracticeSession(JPracticeHolder holder)
     {
-        practiceSession.initSession(holder);
-        practiceSession.onPracticeEnd += onPracticeEnd;
+        practiceSession.InitSession(holder);
+        practiceSession.OnPracticeEnd += OnPracticeEnd;
     }
-    private void onPracticeEnd(bool success)
+    private void OnPracticeEnd(bool success)
     {
         var dialogPrefab = ResourceManager.instance.GetDialogByType(EDialogType.DialogNotice);
         var dialogComp = Instantiate(dialogPrefab, dialogParent).GetComponent<DialogNotice>();

@@ -18,7 +18,7 @@ public class PracticeSession : MonoBehaviour
 
     public Transform electricCircuitParent;
 
-    public Action<bool> onPracticeEnd;
+    public Action<bool> OnPracticeEnd;
     private List<ElectricItemBase> GetAllElectricItem()
     {
         return new List<ElectricItemBase>(electricCircuitParent.GetComponentsInChildren<ElectricItemBase>());
@@ -26,16 +26,16 @@ public class PracticeSession : MonoBehaviour
     private void ShowItemPreview(EElectricItem type)
     {
         itemHandler
-        .init(type.ToString(), "This is the discription which I duno", type)
+        .Init(type.ToString(), "This is the discription which I duno", type)
         .Show();
 
     }
-    public void initSession(JPracticeHolder holder)
+    public void InitSession(JPracticeHolder holder)
     {
         board = holder.GetBoard();
         practice = board.GetPracticeById(holder.GetPracticeId());
         string modelName = board.model;
-        GameObject modleObject = Instantiate(ResourceManager.instance.GetCircuitBoardByModelName(modelName), circuitBoardParent);
+        Instantiate(ResourceManager.instance.GetCircuitBoardByModelName(modelName), circuitBoardParent);
         AddSwitcherListener();
         foreach (var item in practice.Steps)
         {
@@ -123,12 +123,12 @@ public class PracticeSession : MonoBehaviour
         {
             Utils.LogError(this, "Wrong step, you're dead");
         }
-        if (onPracticeEnd != null)
+        if (OnPracticeEnd != null)
         {
-            onPracticeEnd(success);
+            OnPracticeEnd(success);
         }
     }
-    private bool hasSwictcherInput(string type)
+    private bool HasSwictcherInput(string type)
     {
         return userSteps.ContainsKey(type);
     }
