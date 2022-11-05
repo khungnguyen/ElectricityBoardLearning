@@ -1244,6 +1244,7 @@ MonoBehaviour:
   dialogParent: {fileID: 1925263903}
   circuitBoardParent: {fileID: 197890043}
   itemHandler: {fileID: 1043288256}
+  buttonLayout: {fileID: 174677332}
 --- !u!1 &1925263902
 GameObject:
   m_ObjectHideFlags: 0
