@@ -26,7 +26,7 @@ public class ItemHandler : MonoBehaviour
 
     private float rotationSpeed = 500f;
 
-    private float zoomSpeed = 20;
+    private float zoomSpeed = 40;
     private Transform mainModel;
     void Start()
     {
@@ -42,7 +42,7 @@ public class ItemHandler : MonoBehaviour
             {
                 Vector3 direction = new Vector3(Input.GetAxisRaw("Mouse Y"), -Input.GetAxisRaw("Mouse X"), 0);
                 Vector3 velocity = direction * rotationSpeed * Time.deltaTime;
-                mainModel.Rotate(velocity);
+                mainModel.Rotate(velocity,Space.World);
 
             }
             float mouseWheelDirection = Input.mouseScrollDelta.y * zoomSpeed;
