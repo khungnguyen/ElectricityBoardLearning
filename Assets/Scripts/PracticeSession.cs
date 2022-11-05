@@ -19,6 +19,8 @@ public class PracticeSession : MonoBehaviour
     public Transform electricCircuitParent;
 
     public Action<bool> OnPracticeEnd;
+
+    private Transform curCircuitBoard;
     private List<ElectricItemBase> GetAllElectricItem()
     {
         return new List<ElectricItemBase>(electricCircuitParent.GetComponentsInChildren<ElectricItemBase>());
@@ -35,23 +37,30 @@ public class PracticeSession : MonoBehaviour
         board = holder.GetBoard();
         practice = board.GetPracticeById(holder.GetPracticeId());
         string modelName = board.model;
-        Instantiate(ResourceManager.instance.GetCircuitBoardByModelName(modelName), circuitBoardParent);
-        AddSwitcherListener();
+        curCircuitBoard = Instantiate(ResourceManager.instance.GetCircuitBoardByModelName(modelName), circuitBoardParent).transform;
         foreach (var item in practice.Steps)
         {
             resultSteps.Add(item.type, item.value);
         }
+        SettingUpElecitricItems();
         userSteps.Clear();
     }
-    private void AddSwitcherListener()
+    private void SettingUpElecitricItems()
     {
         var listElectricItem = GetAllElectricItem();
         listElectricItem.ForEach(e =>
         {
             if (e is SwitcherBase)
             {
-                var switcher = (SwitcherBase)e;
+                SwitcherBase switcher = (SwitcherBase)e;
                 switcher.OnChange += OnSwitcherChange;
+                int step = FindStepIndexBySwitcherName(switcher.GetName());
+                if (step != -1)
+                {
+                    switcher.SetStepText(step + 1);
+                }
+
+
             }
         });
     }
@@ -123,16 +132,46 @@ public class PracticeSession : MonoBehaviour
         {
             Utils.LogError(this, "Wrong step, you're dead");
         }
+        ShowPracticeCorrectSteps();
         if (OnPracticeEnd != null)
         {
             OnPracticeEnd(success);
         }
     }
-    private bool HasSwictcherInput(string type)
+
+    private void ShowPracticeCorrectSteps()
     {
-        return userSteps.ContainsKey(type);
+        var listElectricItem = GetAllElectricItem();
+        listElectricItem.ForEach(e =>
+        {
+            if (e is SwitcherBase)
+            {
+                SwitcherBase switcher = (SwitcherBase)e;
+                if (switcher.HasUsed())
+                {
+                    switcher.ShowItemStep();
+                }
+
+            }
+        });
     }
-    private int[] correctStep;
+    private int FindStepIndexBySwitcherName(string name)
+    {
+        for (int i = 0; i < resultSteps.Count; i++)
+        {
+            var ele = resultSteps.ElementAt(i);
+            if (ele.Key == name)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
     private Dictionary<string, string> resultSteps = new Dictionary<string, string>();
     private Dictionary<string, string> userSteps = new Dictionary<string, string>();
+    public void Reset() {
+        Destroy(curCircuitBoard.gameObject);
+        resultSteps.Clear();
+        userSteps.Clear();
+    }
 }

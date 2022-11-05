@@ -71,6 +71,11 @@ public class Main : MonoBehaviour
         practiceSession.InitSession(holder);
         practiceSession.OnPracticeEnd += OnPracticeEnd;
     }
+    void EndPracticeSession()
+    {
+        practiceSession.Reset();
+        practiceSession.OnPracticeEnd -= OnPracticeEnd;
+    }
     private void OnPracticeEnd(bool success)
     {
         var dialogPrefab = ResourceManager.instance.GetDialogByType(EDialogType.DialogNotice);
@@ -84,7 +89,12 @@ public class Main : MonoBehaviour
 
         }
         );
-        dialogComp.AddContent(success?"Congratulation! You has passed this practice":"Damn! You has killed the system");
+        dialogComp.AddContent(success ? "Congratulation! You has passed this practice" : "Damn! You has killed the system. Please refer to correct steps on circuit board");
         dialogComp.Show();
+    }
+    public void OnEndPracticeButtonClick()
+    {
+        EndPracticeSession();
+        ShowCBSelectionDialog();
     }
 }
