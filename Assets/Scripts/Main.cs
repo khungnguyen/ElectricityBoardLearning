@@ -94,7 +94,7 @@ public class Main : MonoBehaviour
     {
         var dialogPrefab = ResourceManager.instance.GetDialogByType(EDialogType.DialogNotice);
         var dialogComp = Instantiate(dialogPrefab, dialogParent).GetComponent<DialogNotice>();
-        dialogComp.Init("Notice", (object data) =>
+        dialogComp.Init(success ? "Hoàn Thành" : "Sai Bước Rồi", (object data) =>
         {
 
         },
