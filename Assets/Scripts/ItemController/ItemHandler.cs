@@ -36,18 +36,19 @@ public class ItemHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Utils.IsPointerOverUI(objectTag) && mainModel != null)
+        //if (Utils.IsPointerOverUI(objectTag) && mainModel != null)
         {
-            if (Input.GetMouseButton(0))
-            {
-                Vector3 direction = new Vector3(Input.GetAxisRaw("Mouse Y"), -Input.GetAxisRaw("Mouse X"), 0);
-                Vector3 velocity = direction * rotationSpeed * Time.deltaTime;
-                mainModel.Rotate(velocity,Space.World);
-
-            }
+            // Thanh - Change to move camera around object 
+            // if (Input.GetMouseButton(0))
+            // {
+            //     Vector3 direction = new Vector3(Input.GetAxisRaw("Mouse Y"), -Input.GetAxisRaw("Mouse X"), 0);
+            //     Vector3 velocity = direction * rotationSpeed * Time.deltaTime;
+            //     mainModel.Rotate(velocity,Space.World);
+            //
+            // }
             float mouseWheelDirection = Input.mouseScrollDelta.y * zoomSpeed;
             Vector3 target = mainModel.localScale + new Vector3(mouseWheelDirection, mouseWheelDirection, mouseWheelDirection);
-            mainModel.localScale = Vector3.Lerp(mainModel.localScale, target, 0.05f);
+            mainModel.localScale = Vector3.Lerp(mainModel.localScale, target, 0.1f);
         }
 
     }
