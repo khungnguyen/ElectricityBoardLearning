@@ -103,7 +103,7 @@ public class Main : MonoBehaviour
 
         }
         );
-        dialogComp.AddContent(success ? "Congratulation! You has passed this practice" : "Damn! You has killed the system. Please refer to correct steps on circuit board");
+        dialogComp.AddContent(success ? "Congratulation! You has passed this practice" : "Oh no, you made a mistake. Please refer to correct steps on circuit board");
         dialogComp.Show();
     }
     public void OnEndPracticeButtonClick()
