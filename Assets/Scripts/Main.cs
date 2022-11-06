@@ -27,7 +27,7 @@ public class Main : MonoBehaviour
     {
         var dialogPrefab = ResourceManager.instance.GetDialogByType(EDialogType.DialogScroll);
         cbSelectionDialog = Instantiate(dialogPrefab, dialogParent).GetComponent<DialogScroll>();
-        cbSelectionDialog.Init("Select your Circuit Board",
+        cbSelectionDialog.Init("Lựa Chọn Mạch Điện",
         (object data) =>
         {
             JCircuitBoardItem item = (JCircuitBoardItem)data;
@@ -51,7 +51,7 @@ public class Main : MonoBehaviour
         JCircuitBoardPractice[] practices = board.practices;
         var dialogPrefab = ResourceManager.instance.GetDialogByType(EDialogType.DialogScroll);
         cbPracticesDialog = Instantiate(dialogPrefab, dialogParent).GetComponent<DialogScroll>();
-        cbPracticesDialog.Init("Select your practice",
+        cbPracticesDialog.Init("Lựa Chọn Tình Huống",
         (object data) =>
         {
             JPracticeHolder convert = (JPracticeHolder)data;
@@ -103,7 +103,7 @@ public class Main : MonoBehaviour
 
         }
         );
-        dialogComp.AddContent(success ? "Congratulation! You has passed this practice" : "Oh no, you made a mistake. Please refer to correct steps on circuit board");
+        dialogComp.AddContent(success ? "Chúc mừng! Bạn đã hoàn thành tốt hình huống." : "Bạn thực hiện sai bước rồi! Hãy ôn tập và thực hiện lại tình huống nha.");
         dialogComp.Show();
     }
     public void OnEndPracticeButtonClick()

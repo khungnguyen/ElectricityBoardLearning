@@ -444,7 +444,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Item
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 33cdafad10f3164439f976a478f2f5fa, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 3744551939776077923, guid: 33cdafad10f3164439f976a478f2f5fa,
     type: 2}
   m_fontSharedMaterials: []
@@ -509,7 +509,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1878398372744168896
@@ -2838,7 +2838,7 @@ MonoBehaviour:
   m_text: This is details of Electricity Item and 3D model. Use mouse to rotate the
     object.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 33cdafad10f3164439f976a478f2f5fa, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 3744551939776077923, guid: 33cdafad10f3164439f976a478f2f5fa,
     type: 2}
   m_fontSharedMaterials: []
@@ -2903,7 +2903,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &6471192589025506954

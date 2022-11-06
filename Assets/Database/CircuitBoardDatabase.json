@@ -1,7 +1,7 @@
 {
     "CircuitBoards": [
         {
-          "name": "Circuit Board 1",
+          "name": "Mạch điện 1",
           "model": "CircuitBoard_1",
           "id": "CircuitBoard1",
           "practices": [

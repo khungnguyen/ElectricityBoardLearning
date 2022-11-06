@@ -26,8 +26,9 @@ public class PracticeSession : MonoBehaviour
 
     private void ShowItemPreview(EElectricItem type)
     {
+        String desc = "Thông tin chi tiết về " + type.ToString(); 
         itemHandler
-        .Init(type.ToString(), "This is the discription which I duno", type)
+        .Init(type.ToString(), desc, type)
         .Show();
 
     }
