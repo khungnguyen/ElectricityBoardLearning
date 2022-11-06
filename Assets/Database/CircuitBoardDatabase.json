@@ -25,7 +25,7 @@
               ],
               "DefaultBoard": [
                 {
-                  "type": "DS1",
+                  "type": "FCO",
                   "value": "ON"
                 },
                 {
@@ -33,7 +33,15 @@
                   "value": "ON"
                 },
                 {
-                  "type": "FCO",
+                  "type": "DS1",
+                  "value": "ON"
+                },
+                {
+                  "type": "DS2",
+                  "value": "ON"
+                },
+                {
+                  "type": "DS3",
                   "value": "ON"
                 }
               ]
@@ -66,7 +74,15 @@
                   "value": "OFF"
                 },
                 {
+                  "type": "DS1",
+                  "value": "OFF"
+                },
+                {
                   "type": "DS2",
+                  "value": "OFF"
+                },
+                {
+                  "type": "DS3",
                   "value": "OFF"
                 }
               ]
