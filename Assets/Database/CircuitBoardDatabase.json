@@ -6,40 +6,40 @@
           "id": "CircuitBoard1",
           "practices": [
             {
-              "name": "User Case 1",
-              "instruction": "Turn OFF the power",
+              "name": "Tình huống 1 \n Cắt điện Load 1",
+              "instruction": "Cắt điện Load 1",
               "id": 1,
               "Steps": [
                 {
-                  "type": "FCO",
-                  "value": "ON"
-                },
-                {
                   "type": "DS1",
-                  "value": "ON"
+                  "value": "OFF"
                 },
                 {
-                  "type": "DS2",
-                  "value": "ON"
+                  "type": "DS",
+                  "value": "OFF"
+                },
+                {
+                  "type": "FCO",
+                  "value": "OFF"
                 }
               ]
             },
             {
-              "name": "Case 1",
-              "instruction": "Turn ON the power",
+              "name": "Tình huống 2 \n Đóng điện Load 2",
+              "instruction": "Đóng điện Load 2",
               "id": 2,
               "Steps": [
                 {
                   "type": "FCO",
-                  "value": "OFF"
+                  "value": "ON"
                 },
                 {
-                  "type": "DS1",
+                  "type": "DS",
                   "value": "ON"
                 },
                 {
                   "type": "DS2",
-                  "value": "OFF"
+                  "value": "ON"
                 }
               ]
             }
