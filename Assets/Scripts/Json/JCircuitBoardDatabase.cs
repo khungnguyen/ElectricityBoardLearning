@@ -25,7 +25,15 @@ public class JCircuitBoardPractice
     public string instruction;
     public int id;
 
-    public JPracticeStep[] Steps;
+    public JPracticeStep[] CorrectSteps;
+    public JPracticeStep[] DefaultBoard;
+
+    public List<JPracticeStep> GetCorrectSteps() {
+        return new List<JPracticeStep>(CorrectSteps);
+    }
+    public List<JPracticeStep> GetDefaultItemStatus() {
+        return new List<JPracticeStep>(DefaultBoard);
+    }
 }
 [System.Serializable]
 public class JPracticeStep

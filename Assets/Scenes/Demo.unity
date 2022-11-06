@@ -867,7 +867,7 @@ PrefabInstance:
     - target: {fileID: 5490387687101910414, guid: 7ada091014e87494ebe5803ad6ae852c,
         type: 3}
       propertyPath: m_text
-      value: End Practice
+      value: "K\u1EBFt Th\xFAc"
       objectReference: {fileID: 0}
     - target: {fileID: 5490387688320231356, guid: 7ada091014e87494ebe5803ad6ae852c,
         type: 3}
@@ -1378,7 +1378,7 @@ PrefabInstance:
     - target: {fileID: 5490387687101910414, guid: 7ada091014e87494ebe5803ad6ae852c,
         type: 3}
       propertyPath: m_text
-      value: Reset Board
+      value: "Thi\u1EBFt l\u1EADp l\u1EA1i m\u1EA1ch"
       objectReference: {fileID: 0}
     - target: {fileID: 5490387688320231356, guid: 7ada091014e87494ebe5803ad6ae852c,
         type: 3}

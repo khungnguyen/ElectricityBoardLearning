@@ -9,7 +9,7 @@
               "name": "Tình huống 1 \n Cắt điện Load 1",
               "instruction": "Cắt điện Load 1",
               "id": 1,
-              "Steps": [
+              "CorrectSteps": [
                 {
                   "type": "DS1",
                   "value": "OFF"
@@ -22,13 +22,27 @@
                   "type": "FCO",
                   "value": "OFF"
                 }
+              ],
+              "DefaultBoard": [
+                {
+                  "type": "DS1",
+                  "value": "ON"
+                },
+                {
+                  "type": "DS",
+                  "value": "ON"
+                },
+                {
+                  "type": "FCO",
+                  "value": "ON"
+                }
               ]
             },
             {
               "name": "Tình huống 2 \n Đóng điện Load 2",
               "instruction": "Đóng điện Load 2",
               "id": 2,
-              "Steps": [
+              "CorrectSteps": [
                 {
                   "type": "FCO",
                   "value": "ON"
@@ -40,6 +54,20 @@
                 {
                   "type": "DS2",
                   "value": "ON"
+                }
+              ],
+              "DefaultBoard": [
+                {
+                  "type": "FCO",
+                  "value": "OFF"
+                },
+                {
+                  "type": "DS",
+                  "value": "OFF"
+                },
+                {
+                  "type": "DS2",
+                  "value": "OFF"
                 }
               ]
             }

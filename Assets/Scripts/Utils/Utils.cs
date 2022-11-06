@@ -66,4 +66,7 @@ public class Utils
         }
 
     }
+    public static T String2Enum<T>(string t) {
+         return  (T)System.Enum.Parse( typeof(T), t );
+    }
 }

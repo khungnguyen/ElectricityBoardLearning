@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class PracticeSession : MonoBehaviour
 {
-    
+
 
     public static PracticeSession instance;
 
@@ -26,7 +26,7 @@ public class PracticeSession : MonoBehaviour
 
     private void ShowItemPreview(EElectricItem type)
     {
-        String desc = "Thông tin chi tiết về " + type.ToString(); 
+        String desc = "Thông tin chi tiết về " + type.ToString();
         itemHandler
         .Init(type.ToString(), desc, type)
         .Show();
@@ -38,8 +38,7 @@ public class PracticeSession : MonoBehaviour
         curCircuitBoard = transform;
         board = holder.GetBoard();
         practice = board.GetPracticeById(holder.GetPracticeId());
-        string modelName = board.model;
-        foreach (var item in practice.Steps)
+        foreach (var item in practice.GetCorrectSteps())
         {
             resultSteps.Add(item.type, item.value);
         }
@@ -56,6 +55,11 @@ public class PracticeSession : MonoBehaviour
                 SwitcherBase switcher = (SwitcherBase)e;
                 switcher.OnChange += OnSwitcherChange;
                 int step = FindStepIndexBySwitcherName(switcher.GetName());
+                var defaultItem = practice.GetDefaultItemStatus().Find(item => item.type == switcher.GetName());
+                if (defaultItem != null)
+                {
+                    switcher.ChangeStatus(Utils.String2Enum<ESwitcherStatus>(defaultItem.value));
+                }
                 if (step != -1)
                 {
                     switcher.SetStepText(step + 1);
@@ -185,10 +189,10 @@ public class PracticeSession : MonoBehaviour
             if (electric != null)
             {
                 var switcher = (SwitcherBase)electric;
-                if (switcher != null)
+                var defaultItem = practice.GetDefaultItemStatus().Find(item => item.type == switcher.GetName());
+                if (defaultItem != null)
                 {
-                    switcher.Reset();
-
+                    switcher.ChangeStatus(Utils.String2Enum<ESwitcherStatus>(defaultItem.value));
                 }
             }
         });
