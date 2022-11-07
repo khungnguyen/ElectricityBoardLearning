@@ -28,7 +28,7 @@ public class PracticeSession : MonoBehaviour
     * Get All electric items from circuit board
     * return ElectricItemBase
     */
-    private List<ElectricItemBase> GetAllElectricItem()
+    private List<ElectricItemBase> GetAllElectricItemsOnBoard()
     {
         return new List<ElectricItemBase>(curCircuitBoard.GetComponentsInChildren<ElectricItemBase>());
     }
@@ -43,10 +43,14 @@ public class PracticeSession : MonoBehaviour
     private void ShowDetailElectricModel(EElectricItem type)
     {
         // Res
-        String desc = "Thông tin chi tiết về " + type.ToString();
-        itemHandler
-        .Init(type.ToString(), desc, type)
-        .Show();
+        JElectricItem item = ItemManager.instance.GetElectricItemByType(type);
+        if (item != null)
+        {
+            itemHandler
+            .Init(item.title, item.description, item.model)
+            .Show();
+        }
+
 
     }
 
@@ -71,7 +75,7 @@ public class PracticeSession : MonoBehaviour
     }
     private void SettingUpElectricItems()
     {
-        var listElectricItem = GetAllElectricItem();
+        var listElectricItem = GetAllElectricItemsOnBoard();
         infoWindow = GetComponentInChildren<CircuitInfoWindow>();
         if (infoWindow == null)
         {
@@ -203,7 +207,7 @@ public class PracticeSession : MonoBehaviour
 
     private void ShowPracticeCorrectSteps(bool show)
     {
-        var listElectricItem = GetAllElectricItem();
+        var listElectricItem = GetAllElectricItemsOnBoard();
         listElectricItem.ForEach(e =>
         {
             if (e is DSSwitcher ds)
@@ -232,7 +236,7 @@ public class PracticeSession : MonoBehaviour
     {
         userSteps.Clear();
         ShowPracticeCorrectSteps(false);
-        GetAllElectricItem().ForEach(electric =>
+        GetAllElectricItemsOnBoard().ForEach(electric =>
         {
             if (electric != null)
             {

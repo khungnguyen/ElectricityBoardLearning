@@ -27,6 +27,10 @@ public class ResourceManager : MonoBehaviour
     {
         return electricItems.Find((e => e.name == type.ToString()));
     }
+     public GameObject GetElectricModelByName(string name)
+    {
+        return electricItems.Find((e => e.name == name));
+    }
     public GameObject GetCircuitBoardByModelName(string name)
     {
         return circuitBoardItems.Find((e => e.name == name.ToString()));

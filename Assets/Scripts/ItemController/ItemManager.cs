@@ -8,7 +8,18 @@ public class ItemManager : MonoBehaviour
 
     public static ItemManager instance;
 
-    public void Awake() {
+    private List<JElectricItem> itemDatabase = null;
+    void Awake() {
         instance = this;
+    }
+    
+    private List<JElectricItem> GetAllItems() {
+        if(itemDatabase == null) {
+            itemDatabase = new List<JElectricItem>(ResourceManager.instance.electricItemDatabase.ElectricItems);
+        }
+        return itemDatabase;
+    }
+    public JElectricItem GetElectricItemByType(EElectricItem type) {
+        return GetAllItems().Find(e=>e.type == type.ToString());
     }
 }

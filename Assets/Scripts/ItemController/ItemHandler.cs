@@ -52,7 +52,7 @@ public class ItemHandler : MonoBehaviour
         }
 
     }
-    public ItemHandler Init(string title, string des, EElectricItem type)
+    public ItemHandler Init(string title, string des, string modelName)
     {
         if (itemTitle != null)
         {
@@ -62,7 +62,7 @@ public class ItemHandler : MonoBehaviour
         {
             itemDescription.SetText(des);
         }
-        GameObject model = ResourceManager.instance.GetElectricItemByType(type);
+        GameObject model = ResourceManager.instance.GetElectricModelByName(modelName);
         if (model != null)
         {
             mainModel = Instantiate(model, instantiatePoint.position, instantiatePoint.rotation).transform;
