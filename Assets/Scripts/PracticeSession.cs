@@ -81,6 +81,7 @@ public class PracticeSession : MonoBehaviour
         {
             Utils.LogError(this, "Missing infoWindow component");
         }
+        Dictionary<EElectricItem, SwitcherBase> unquieElectricItemType = new();
         listElectricItem.ForEach(switcher =>
         {
             if (switcher is DSSwitcher ds)
@@ -100,17 +101,25 @@ public class PracticeSession : MonoBehaviour
                 {
                     ds.SetStepText(step + 1);
                 }
-                infoWindow.AddScrollContent(ds.GetName(), ds, (object data) =>
+                if (!unquieElectricItemType.ContainsKey(ds.type))
                 {
-                    if (data is SwitcherBase sw)
-                    {
-                        Utils.Log(this, "AddScrollContent", sw.GetName());
-                        ShowDetailElectricModel(sw.type);
-                    }
+                    unquieElectricItemType.Add(ds.type, ds);
+                }
 
-                });
             }
         });
+        foreach (var e in unquieElectricItemType)
+        {
+            infoWindow.AddScrollContent(e.Value.type.ToString(), e.Value, (object data) =>
+                          {
+                              if (data is SwitcherBase sw)
+                              {
+                                  Utils.Log(this, "AddScrollContent", sw.GetName());
+                                  ShowDetailElectricModel(sw.type);
+                              }
+
+                          });
+        }
 
 
     }

@@ -389,12 +389,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197890042}
   m_CullTransparentMesh: 1
---- !u!224 &235516603 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 6258706913941667598, guid: 0abfa68c6ccc25f4089b956906d76ce2,
-    type: 3}
-  m_PrefabInstance: {fileID: 6258706913542651756}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &253889770
 GameObject:
   m_ObjectHideFlags: 0
@@ -1527,11 +1521,12 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 1983802905}
     m_Modifications:
-    - target: {fileID: 6258706913573400493, guid: 0abfa68c6ccc25f4089b956906d76ce2,
-        type: 3}
-      propertyPath: mTransform
-      value: 
-      objectReference: {fileID: 235516603}
+    - target: {fileID: 1564545337, guid: 0abfa68c6ccc25f4089b956906d76ce2, type: 3}
+      propertyPath: m_text
+      value: "- Nh\u1EA5n v\xE0 di chuy\u1EC3n chu\u1ED9t \u0111\u1EC3 xoay thi\u1EBFt
+        b\u1ECB.\n- Cu\u1ED9n chu\u1ED9t gi\u1EEFa \u0111\u1EC3 ph\xF3ng to / thu
+        nh\u1ECF thi\u1EBFt b\u1ECB.\r\n\r\n"
+      objectReference: {fileID: 0}
     - target: {fileID: 6258706913573400534, guid: 0abfa68c6ccc25f4089b956906d76ce2,
         type: 3}
       propertyPath: m_Name
