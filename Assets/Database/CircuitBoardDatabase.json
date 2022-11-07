@@ -6,8 +6,8 @@
           "id": "CircuitBoard1",
           "practices": [
             {
-              "name": "1",
-              "instruction": " 1",
+              "name": "Tình huống 1 \n Cắt điện Load 1",
+              "instruction": "Cắt điện Load 1",
               "id": 1,
               "CorrectSteps": [
                 {
@@ -47,8 +47,8 @@
               ]
             },
             {
-              "name": "2",
-              "instruction": "2",
+              "name": "Tình huống 2 \n Đóng điện Load 2",
+              "instruction": "Đóng điện Load 2",
               "id": 2,
               "CorrectSteps": [
                 {

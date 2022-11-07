@@ -18,20 +18,44 @@ public class PracticeSession : MonoBehaviour
     private JCircuitBoardItem board;
     private JCircuitBoardPractice practice;
     private ItemHandler itemHandler;
+
+    private Dictionary<string, string> resultSteps = new();
+    private Dictionary<string, string> userSteps = new();
+
+    private CircuitInfoWindow infoWindow;
+
+    /**
+    * Get All electric items from circuit board
+    * return ElectricItemBase
+    */
     private List<ElectricItemBase> GetAllElectricItem()
     {
         return new List<ElectricItemBase>(curCircuitBoard.GetComponentsInChildren<ElectricItemBase>());
     }
 
+    /**
+    *
+    * When buttong click, a pop up will display to show the 3D model
+    * All information will be got from database (JElectricItemDatabase)
+    * @param EElectricItem type : Type of Model, which define in database 
+    *
+    */
     private void ShowDetailElectricModel(EElectricItem type)
     {
-       // Res
+        // Res
         String desc = "Thông tin chi tiết về " + type.ToString();
         itemHandler
         .Init(type.ToString(), desc, type)
         .Show();
 
     }
+
+    /**
+    *
+    * Instantiate new practice session
+    * Display all items, set item to default values
+    * Add listener for each item button
+    */
     public void InitSession(JPracticeHolder holder, ItemHandler handler)
     {
         itemHandler = handler;
@@ -42,19 +66,24 @@ public class PracticeSession : MonoBehaviour
         {
             resultSteps.Add(item.type, item.value);
         }
-        SettingUpElecitricItems();
+        SettingUpElectricItems();
         userSteps.Clear();
     }
-    private void SettingUpElecitricItems()
+    private void SettingUpElectricItems()
     {
         var listElectricItem = GetAllElectricItem();
+        infoWindow = GetComponentInChildren<CircuitInfoWindow>();
+        if (infoWindow == null)
+        {
+            Utils.LogError(this, "Missing infoWindow component");
+        }
         listElectricItem.ForEach(switcher =>
         {
             if (switcher is DSSwitcher ds)
             {
-                if(ds)
                 ds.OnChange += OnSwitcherChange;
-                ds.SetViewButtonListener((SwitcherBase sw)=>{
+                ds.SetViewButtonListener((SwitcherBase sw) =>
+                {
                     ShowDetailElectricModel(sw.type);
                 });
                 int step = FindStepIndexBySwitcherName(switcher.GetName());
@@ -67,11 +96,26 @@ public class PracticeSession : MonoBehaviour
                 {
                     ds.SetStepText(step + 1);
                 }
+                infoWindow.AddScrollContent(ds.GetName(), ds, (object data) =>
+                {
+                    if (data is SwitcherBase sw)
+                    {
+                        Utils.Log(this, "AddScrollContent", sw.GetName());
+                        ShowDetailElectricModel(sw.type);
+                    }
 
-
+                });
             }
         });
+
+
     }
+
+    /**
+    * When switcher is click, event would be notified to the listener for handling
+    * @param s : ESwitcherStatus status of switcher : ON/OF
+    * @param ins : SwitcherBase  an instance of Switcher
+    */
     private void OnSwitcherChange(ESwitcherStatus s, SwitcherBase ins, bool isRightMouse)
     {
         Utils.Log(this, "OnSwitcherChange", ins);
@@ -135,6 +179,11 @@ public class PracticeSession : MonoBehaviour
         }
 
     }
+
+    /**
+    * Trigger when User finishes or made a wrong step
+    * @param bool success :
+    */
     public void OnCompleted(bool success)
     {
         if (success)
@@ -179,8 +228,6 @@ public class PracticeSession : MonoBehaviour
         }
         return -1;
     }
-    private Dictionary<string, string> resultSteps = new Dictionary<string, string>();
-    private Dictionary<string, string> userSteps = new Dictionary<string, string>();
     public void Reset()
     {
         userSteps.Clear();

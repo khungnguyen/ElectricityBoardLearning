@@ -17,7 +17,7 @@ public class ButtonBase : MonoBehaviour
     {
         label.SetText(t);
     }
-    public void Click(string action)
+    public void Click()
     {
         if (OnClicked != null)
         {

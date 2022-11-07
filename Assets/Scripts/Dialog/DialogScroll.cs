@@ -12,9 +12,9 @@ public class DialogScroll : Dialog, IButtonEvent
     private GameObject baseButton;
     public ButtonBase AddButton(GameObject button)
     {
-        var buttonbase = Instantiate(button, scrollContent).GetComponent<ButtonBase>();
-        buttonbase.OnClicked += OnClicked;
-        return buttonbase;
+        var buttonBase = Instantiate(button, scrollContent).GetComponent<ButtonBase>();
+        buttonBase.OnClicked += OnClicked;
+        return buttonBase;
     }
     public ButtonBase AddButton()
     {
