@@ -15,7 +15,6 @@ public class PracticeSession : MonoBehaviour
 
     private Transform curCircuitBoard;
 
-
     private JCircuitBoardItem board;
     private JCircuitBoardPractice practice;
     private ItemHandler itemHandler;
@@ -24,8 +23,9 @@ public class PracticeSession : MonoBehaviour
         return new List<ElectricItemBase>(curCircuitBoard.GetComponentsInChildren<ElectricItemBase>());
     }
 
-    private void ShowItemPreview(EElectricItem type)
+    private void ShowDetailElectricModel(EElectricItem type)
     {
+       // Res
         String desc = "Thông tin chi tiết về " + type.ToString();
         itemHandler
         .Init(type.ToString(), desc, type)
@@ -48,21 +48,24 @@ public class PracticeSession : MonoBehaviour
     private void SettingUpElecitricItems()
     {
         var listElectricItem = GetAllElectricItem();
-        listElectricItem.ForEach(e =>
+        listElectricItem.ForEach(switcher =>
         {
-            if (e is SwitcherBase)
+            if (switcher is DSSwitcher ds)
             {
-                SwitcherBase switcher = (SwitcherBase)e;
-                switcher.OnChange += OnSwitcherChange;
+                if(ds)
+                ds.OnChange += OnSwitcherChange;
+                ds.SetViewButtonListener((SwitcherBase sw)=>{
+                    ShowDetailElectricModel(sw.type);
+                });
                 int step = FindStepIndexBySwitcherName(switcher.GetName());
                 var defaultItem = practice.GetDefaultItemStatus().Find(item => item.type == switcher.GetName());
                 if (defaultItem != null)
                 {
-                    switcher.ChangeStatus(Utils.String2Enum<ESwitcherStatus>(defaultItem.value));
+                    ds.ChangeStatus(Utils.String2Enum<ESwitcherStatus>(defaultItem.value));
                 }
                 if (step != -1)
                 {
-                    switcher.SetStepText(step + 1);
+                    ds.SetStepText(step + 1);
                 }
 
 
@@ -76,7 +79,6 @@ public class PracticeSession : MonoBehaviour
         {
             if (isRightMouse)
             {
-                ShowItemPreview(ins.type);
             }
             else
             {
@@ -155,12 +157,11 @@ public class PracticeSession : MonoBehaviour
         var listElectricItem = GetAllElectricItem();
         listElectricItem.ForEach(e =>
         {
-            if (e is SwitcherBase)
+            if (e is DSSwitcher ds)
             {
-                SwitcherBase switcher = (SwitcherBase)e;
-                if (switcher.HasUsed())
+                if (ds.HasUsed())
                 {
-                    switcher.ShowStepInstruciton(show);
+                    ds.ShowStepInstruciton(show);
                 }
 
             }

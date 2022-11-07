@@ -3,28 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using System;
 
 public class SwitcherBase : ElectricItemBase, IPointerDownHandler
 {
 
     public delegate void OnSwitcherChange(ESwitcherStatus status, SwitcherBase instance, bool isRightMouse);
     public event OnSwitcherChange OnChange;
-    public Animator animator;
-
-    public TMP_Text tmpStep;
-
-    public GameObject stepParent;
     public ESwitcherStatus status = ESwitcherStatus.OFF;
-
-    private ESwitcherStatus defaultStatus;
-    private int step = -1;
-    void Awake()
+    public void Start()
     {
-        if (stepParent)
-        {
-            stepParent.SetActive(false);
-        }
-        defaultStatus = status;
+        SetName(GetName());
     }
     public virtual void OnSwitcherClicked()
     {
@@ -48,19 +37,7 @@ public class SwitcherBase : ElectricItemBase, IPointerDownHandler
             OnChange(status, this, true);
         }
     }
-    public void SetStepText(int i)
-    {
-        tmpStep.SetText(i.ToString());
-        step = i;
-    }
-    public bool HasUsed()
-    {
-        return step != -1;
-    }
-    public void ShowStepInstruciton(bool show)
-    {
-        stepParent.SetActive(show);
-    }
+
     public virtual void ChangeStatus(ESwitcherStatus status)
     {
         this.status = status;
@@ -68,30 +45,8 @@ public class SwitcherBase : ElectricItemBase, IPointerDownHandler
     public ESwitcherStatus GetStatus()
     {
         return status;
-    }
-    public ESwitcherStatus GetDefaultStatus()
-    {
-        return defaultStatus;
-    }
-    void OnValidate()
-    {
-        var off = transform.Find("Off");
-        var on = transform.Find("On");
-        off.gameObject.SetActive(status == ESwitcherStatus.OFF);
-        on.gameObject.SetActive(status == ESwitcherStatus.ON);
-    }
-    public void Reset()
-    {
-        ChangeStatus(defaultStatus);  
-    }
-    protected void ResetTrigger()
-    {
-        foreach (var trigger in animator.parameters)
-        {
-            if (trigger.type == AnimatorControllerParameterType.Trigger)
-            {
-                animator.ResetTrigger(trigger.name);
-            }
-        }
+    }   
+    public virtual void SetName(string t) {
+         defaultName = t;
     }
 }

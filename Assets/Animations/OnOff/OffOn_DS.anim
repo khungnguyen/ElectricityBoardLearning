@@ -42,7 +42,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Off
+    path: OnOff/Off
     classID: 1
     script: {fileID: 0}
   - curve:
@@ -70,7 +70,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: On
+    path: OnOff/On
     classID: 1
     script: {fileID: 0}
   m_PPtrCurves: []
@@ -82,7 +82,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 334568355
+      path: 1279163410
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -90,7 +90,7 @@ AnimationClip:
       isPPtrCurve: 0
       isIntCurve: 0
     - serializedVersion: 2
-      path: 2620525930
+      path: 1457370195
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
@@ -144,7 +144,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: Off
+    path: OnOff/Off
     classID: 1
     script: {fileID: 0}
   - curve:
@@ -172,7 +172,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_IsActive
-    path: On
+    path: OnOff/On
     classID: 1
     script: {fileID: 0}
   m_EulerEditorCurves: []
