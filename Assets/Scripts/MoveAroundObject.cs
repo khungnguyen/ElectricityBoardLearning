@@ -17,6 +17,7 @@ public class MoveAroundObject : MonoBehaviour
     private float _distanceFromTarget = 3.0f;
 
     private Vector3 _currentRotation;
+    Vector3 _nextRotation;
     private Vector3 _smoothVelocity = Vector3.zero;
 
     [SerializeField]
@@ -27,22 +28,33 @@ public class MoveAroundObject : MonoBehaviour
 
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity;
+        if (Input.GetMouseButton(0))
+        {
+            float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity;
+            float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity;
 
-        _rotationY += mouseX;
-        _rotationX -= mouseY;
+            _rotationY += mouseX;
+            _rotationX -= mouseY;
 
-        // Apply clamping for x rotation 
-        _rotationX = Mathf.Clamp(_rotationX, _rotationXMinMax.x, _rotationXMinMax.y);
+            // Apply clamping for x rotation 
+            _rotationX = Mathf.Clamp(_rotationX, _rotationXMinMax.x, _rotationXMinMax.y);
+            _nextRotation = new Vector3(_rotationX, _rotationY);
+        }
+        else
+        {
+            if (_currentRotation != _nextRotation && _smoothVelocity.sqrMagnitude < 0.1)
+            {
+                _currentRotation = _nextRotation;
+            }
+        }
+        if ((_currentRotation != _nextRotation))
+        {
+            // Apply damping between rotation changes
+            _currentRotation = Vector3.SmoothDamp(_currentRotation, _nextRotation, ref _smoothVelocity, _smoothTime);
+            transform.localEulerAngles = _currentRotation;
 
-        Vector3 nextRotation = new Vector3(_rotationX, _rotationY);
-
-        // Apply damping between rotation changes
-        _currentRotation = Vector3.SmoothDamp(_currentRotation, nextRotation, ref _smoothVelocity, _smoothTime);
-        transform.localEulerAngles = _currentRotation;
-
-        // Substract forward vector of the GameObject to point its forward vector to the target
-        transform.position = _target.position - transform.forward * _distanceFromTarget;
+            // Substract forward vector of the GameObject to point its forward vector to the target
+            transform.position = _target.position - transform.forward * _distanceFromTarget;
+        }
     }
 }
