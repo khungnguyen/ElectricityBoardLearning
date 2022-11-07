@@ -37,7 +37,9 @@ public class Main : MonoBehaviour
                 ShowPracticeCases(item);
             });
         },
-        null);
+        (object data)=>{
+            Application.Quit();
+        });
         foreach (JCircuitBoardItem item in ResourceManager.instance.circuitDatabase.CircuitBoards)
         {
             ButtonBase button = cbSelectionDialog.AddButton();
