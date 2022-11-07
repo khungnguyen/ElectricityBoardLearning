@@ -37,6 +37,7 @@ public class ItemHandler : MonoBehaviour
     void Update()
     {
         //if (Utils.IsPointerOverUI(objectTag) && mainModel != null)
+        if (mainModel != null)
         {
             // Thanh - Change to move camera around object 
             // if (Input.GetMouseButton(0))

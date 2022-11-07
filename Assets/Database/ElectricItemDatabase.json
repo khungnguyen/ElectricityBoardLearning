@@ -3,13 +3,13 @@
       {
         "type": "FCO",
         "title": "FCO",
-        "description": "-Tiêu chuẩn áp dụng: ANSI C37.42, IEC 60282-2, IEC 62217, IEC 61109\n-Điện áp định mức: 24kV & 35kV\n-Dòng điện định mức: 100A & 200A\n-Tần số định mức: 50Hz\nKhả năng cắt ngắn mạch: 12kA",
+        "description": "- Tiêu chuẩn áp dụng: ANSI C37.42, IEC 60282-2, IEC 62217, IEC 61109\n- Điện áp định mức: 24kV & 35kV\n- Dòng điện định mức: 100A & 200A\n- Tần số định mức: 50Hz\nKhả năng cắt ngắn mạch: 12kA",
         "model": "FCO"
       },
       {
         "type": "DS",
         "title": "DS",
-        "description": "-Aptomat LS MCCB 3 pha, dòng định mức 400A, dòng cắt ngắn mạch 42kA. ABN403c 400A dùng để kiểm soát, bảo vệ quá tải và ngắn mạch.",
+        "description": "- Aptomat LS MCCB 3 pha, dòng định mức 400A, dòng cắt ngắn mạch 42kA.\n- ABN403c 400A dùng để kiểm soát, bảo vệ quá tải và ngắn mạch.",
         "model": "DS"
       }
     ]
