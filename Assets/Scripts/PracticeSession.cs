@@ -13,8 +13,6 @@ public class PracticeSession : MonoBehaviour
 
     public Action<bool> OnPracticeEnd;
 
-    private Transform curCircuitBoard;
-
     private JCircuitBoardItem board;
     private JCircuitBoardPractice practice;
     private ItemHandler itemHandler;
@@ -22,7 +20,7 @@ public class PracticeSession : MonoBehaviour
     private Dictionary<string, string> resultSteps = new();
     private Dictionary<string, string> userSteps = new();
 
-    private CircuitInfoWindow infoWindow;
+    private CircuitBoard circuitBoard;
 
     /**
     * Get All electric items from circuit board
@@ -30,7 +28,7 @@ public class PracticeSession : MonoBehaviour
     */
     private List<ElectricItemBase> GetAllElectricItemsOnBoard()
     {
-        return new List<ElectricItemBase>(curCircuitBoard.GetComponentsInChildren<ElectricItemBase>());
+        return circuitBoard.GetAllElectricItems();
     }
 
     /**
@@ -63,25 +61,21 @@ public class PracticeSession : MonoBehaviour
     public void InitSession(JPracticeHolder holder, ItemHandler handler)
     {
         itemHandler = handler;
-        curCircuitBoard = transform;
         board = holder.GetBoard();
         practice = board.GetPracticeById(holder.GetPracticeId());
+        circuitBoard = GetComponent<CircuitBoard>();
         foreach (var item in practice.GetCorrectSteps())
         {
             resultSteps.Add(item.type, item.value);
         }
-        SettingUpElectricItems();
         userSteps.Clear();
+        SettingUpCircuitBoard();
+
     }
-    private void SettingUpElectricItems()
+    private void SettingUpCircuitBoard()
     {
         var listElectricItem = GetAllElectricItemsOnBoard();
-        infoWindow = GetComponentInChildren<CircuitInfoWindow>();
-        if (infoWindow == null)
-        {
-            Utils.LogError(this, "Missing infoWindow component");
-        }
-        Dictionary<EElectricItem, SwitcherBase> unquieElectricItemType = new();
+        Dictionary<EElectricItem, SwitcherBase> uniqueElectricItemType = new();
         listElectricItem.ForEach(switcher =>
         {
             if (switcher is DSSwitcher ds)
@@ -101,26 +95,25 @@ public class PracticeSession : MonoBehaviour
                 {
                     ds.SetStepText(step + 1);
                 }
-                if (!unquieElectricItemType.ContainsKey(ds.type))
+                if (!uniqueElectricItemType.ContainsKey(ds.type))
                 {
-                    unquieElectricItemType.Add(ds.type, ds);
+                    uniqueElectricItemType.Add(ds.type, ds);
                 }
 
             }
         });
-        foreach (var e in unquieElectricItemType)
+        foreach (var e in uniqueElectricItemType)
         {
-            infoWindow.AddScrollContent(e.Value.type.ToString(), e.Value, (object data) =>
-                          {
-                              if (data is SwitcherBase sw)
-                              {
-                                  Utils.Log(this, "AddScrollContent", sw.GetName());
-                                  ShowDetailElectricModel(sw.type);
-                              }
+            circuitBoard.AddElectricItemTypeInfoSection(e, (object data) =>
+            {
+                if (data is SwitcherBase sw)
+                {
+                    ShowDetailElectricModel(sw.type);
+                }
 
-                          });
+            });
         }
-
+        circuitBoard.InitBoard(practice.name);
 
     }
 
